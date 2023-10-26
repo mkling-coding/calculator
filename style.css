@@ -1,0 +1,57 @@
+/* Color palette
+Maroon: #461220
+Dark red: #8C2F39;
+Normal red: #B23A48;
+Salmon: #FCB9B2;
+Peach: #FED0BB; */
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #461220;
+    color: white;
+}
+
+#calculator {
+    width: 90%;
+    max-width: 500px;
+    min-width: 300px;
+    background-color: #8C2F39; 
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    margin: 50px auto;
+    padding: 40px 10px;
+    font-size: 21px;
+}
+
+#displayedNumber {
+    text-align: right;
+    margin: 0px 5px 15px 5px;
+    border-radius: 5px;
+    padding: 20px;
+    background-color: #B23A48;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+
+#number-grid {
+    display: grid;
+    grid-template-rows: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.box {
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    background-color: #b23a48;
+    text-align: center;
+    border-radius: 5px;
+    padding: 20px 5px;
+    margin: 5px;
+}
+
+#equals {
+    grid-area: 5 / 3 / 6 / 5;
+}
