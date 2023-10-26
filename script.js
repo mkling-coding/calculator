@@ -1,3 +1,7 @@
+// Calculator buttons
+const buttons = document.querySelectorAll(".box")
+const numberDisplay = document.querySelector("#displayedNumber p")
+
 // Basic math operators
 const add = (num1, num2) => {
     return num1 + num2;
@@ -12,13 +16,18 @@ const multiply = (num1, num2) => {
 }
 
 const divide = (num1, num2) => {
-    return num1/num2;
+    return num1 / num2;
+}
+
+const remainder = (num1, num2) => {
+    return num1 % num2;
 }
 
 // Variables for each part of a calculator operation
 let firstNumber;
 let secondNumber;
 let operator;
+let currentString;
 
 // Takes an operator and 2 numbers and then calls one of the above functions on the numbers
 const operate = (num1, num2, operator) => {
@@ -34,3 +43,4 @@ const operate = (num1, num2, operator) => {
         return "Error: invalid operator"
     }
 };
+
