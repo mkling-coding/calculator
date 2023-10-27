@@ -1,6 +1,6 @@
 // Calculator buttons
 const buttons = document.querySelectorAll(".box")
-const numberDisplay = document.querySelector("#displayedNumber p")
+const numberDisplay = document.querySelector("#currentNumber")
 
 // Basic math operators
 const add = (num1, num2) => {
@@ -23,11 +23,13 @@ const remainder = (num1, num2) => {
     return num1 % num2;
 }
 
+console.log(remainder(1000, 15))
+
 // Variables for each part of a calculator operation
 let firstNumber;
 let secondNumber;
 let operator;
-let currentString;
+let currentString = "0";
 
 // Takes an operator and 2 numbers and then calls one of the above functions on the numbers
 const operate = (num1, num2, operator) => {
@@ -44,33 +46,6 @@ const operate = (num1, num2, operator) => {
     }
 };
 
-// Checks if operator is in currentString or if value passed is an operator -- if so, add space before number. If not, just add number.
-
-const checkForSpace = (characterInput) => {
-    // If currentString isn't empty
-    if (currentString) {
-        let lastCharacter = currentString.charAt(currentString.length - 1);
-        console.log(lastCharacter)
-        // If lastCharacter is operator, add space before character
-        if (lastCharacter === "+" || lastCharacter === "-" || lastCharacter === "*" || lastCharacter === "/" || lastCharacter === "%") {
-            currentString += ` ${characterInput}`
-        // Else if characterInput is an operator, add space before character
-        } else if (characterInput === "+" || characterInput === "-" || characterInput === "*" || characterInput === "/" || characterInput === "%") {
-            currentString += ` ${characterInput}`
-        // Else just add character
-        } else {
-            currentString += characterInput
-        }
-    // Else if currentString is empty
-    } else {
-        currentString = characterInput
-    }
-}
-
-//
-checkForSpace("+")
-console.log(currentString)
-
 // Add clear all function that makes the calculator start from scratch again
 
 // Add delete function that deletes one number
@@ -79,6 +54,8 @@ console.log(currentString)
 
 buttons[0].addEventListener("click", function(e) {
     // Clear all function
+    currentString = "0";
+    numberDisplay.textContent = currentString;
 })
 
 buttons[1].addEventListener("click", function(e) {
@@ -88,70 +65,239 @@ buttons[1].addEventListener("click", function(e) {
 buttons[2].addEventListener("click", function(e) {
     // Check if currentString isn't empty - if so, characterInput = 0 %
     // Remainder function
+    let lastCharacter = currentString.charAt(currentString.length - 2);
+
+    if (currentString.includes("+")) {
+        // +
+        if (lastCharacter === "+") {
+            currentString = currentString.slice(0, -3) + " % "
+        } else {
+            // First number equals number before operator
+            firstNumber = currentString.substring(0, currentString.indexOf(" "));
+            // Second number equals number after operator
+            secondNumber = currentString.substring((currentString.indexOf("+") + 1), currentString.length);
+            // Current string = remainder of two numbers
+            currentString = remainder(parseFloat(firstNumber), parseFloat(secondNumber));
+            // firstNumber is now remainder of last two numbers
+            firstNumber = currentString;
+            numberDisplay.textContent = currentString;
+        }
+    } else if (currentString.includes("-")) {
+        // -
+        if (lastCharacter === "-") {
+            currentString = currentString.slice(0, -3) + " % "
+        } else {
+            firstNumber = currentString.substring(0, currentString.indexOf(" "));
+        }
+    } else if (currentString.includes("*")) {
+        // *
+        if (lastCharacter === "*") {
+            currentString = currentString.slice(0, -3) + " % "
+        } else {
+            firstNumber = currentString.substring(0, currentString.indexOf(" "));
+        }
+    } else if (currentString.includes("/")) {
+        // /
+        if (lastCharacter === "/") {
+            currentString = currentString.slice(0, -3) + " % "
+        } else {
+            firstNumber = currentString.substring(0, currentString.indexOf(" "));
+        }
+    } else if (currentString.includes("%")) {
+        // %
+        if (lastCharacter === "%") {
+            currentString = currentString.slice(0, -3) + " % "
+        } else {
+            // First number equals number before operator
+            firstNumber = currentString.substring(0, currentString.indexOf(" "));
+            // Second number equals number after operator
+            secondNumber = currentString.substring((currentString.indexOf("%") + 1), currentString.length);
+            // Current string = remainder of two numbers
+            currentString = remainder(parseFloat(firstNumber), parseFloat(secondNumber));
+            // firstNumber is now remainder of last two numbers
+            firstNumber = currentString;
+            // Add remainder to currentString
+            currentString += " % ";
+            // Set display to remainder
+            numberDisplay.textContent = currentString;
+        }
+    } else if (currentString) {
+        currentString += " % ";
+        numberDisplay.textContent = currentString;
+    }
 })
 
 buttons[3].addEventListener("click", function(e) {
     // Check if currentString isn't empty - if so, characterInput = 0 %
     // Add function
+    if (currentString) {
+        checkForSpace(" + ")
+    } else {
+        checkForSpace("0 + ")
+    }
 })
 
 buttons[4].addEventListener("click", function(e) {
     // 1
+
+    if (currentString === "0") {
+        currentString = "1"
+    } else {
+        currentString += "1"
+    }
+
+    numberDisplay.textContent = currentString;
 })
 
 buttons[5].addEventListener("click", function(e) {
     // 2
+
+    if (currentString === "0") {
+        currentString = "2"
+    } else {
+        currentString += "2"
+    }
+
+    numberDisplay.textContent = currentString;
 })
 
 buttons[6].addEventListener("click", function(e) {
     // 3
+
+    if (currentString === "0") {
+        currentString = "3"
+    } else {
+        currentString += "3"
+    }
+
+    numberDisplay.textContent = currentString;
 })
 
 buttons[7].addEventListener("click", function(e) {
     // Check if currentString isn't empty - if so, characterInput = 0 %
     // Multiply function
+    if (currentString) {
+        checkForSpace(" * ")
+    } else {
+        checkForSpace("0 * ")
+    }
 })
 
 buttons[8].addEventListener("click", function(e) {
     // 4
+
+    if (currentString === "0") {
+        currentString = "4"
+    } else {
+        currentString += "4"
+    }
+
+    numberDisplay.textContent = currentString;
 })
 
 buttons[9].addEventListener("click", function(e) {
     // 5
+
+    if (currentString === "0") {
+        currentString = "5"
+    } else {
+        currentString += "5"
+    }
+
+    numberDisplay.textContent = currentString;
 })
 
 buttons[10].addEventListener("click", function(e) {
     // 6
+
+    if (currentString === "0") {
+        currentString = "6"
+    } else {
+        currentString += "6"
+    }
+
+    numberDisplay.textContent = currentString;
 })
 
 buttons[11].addEventListener("click", function(e) {
     // Check if currentString isn't empty - if so, characterInput = 0 %
     // Divide function
+    if (currentString) {
+        checkForSpace(" / ")
+    } else {
+        checkForSpace("0 / ")
+    }
 })
 
 buttons[12].addEventListener("click", function(e) {
     // 7
+
+    if (currentString === "0") {
+        currentString = "7"
+    } else {
+        currentString += "7"
+    }
+
+    numberDisplay.textContent = currentString;
 })
 
 buttons[13].addEventListener("click", function(e) {
     // 8
+
+    if (currentString === "0") {
+        currentString = "8"
+    } else {
+        currentString += "8"
+    }
+
+    numberDisplay.textContent = currentString;
 })
 
 buttons[14].addEventListener("click", function(e) {
     // 9
+
+    if (currentString === "0") {
+        currentString = "9"
+    } else {
+        currentString += "9"
+    }
+
+    numberDisplay.textContent = currentString;
 })
 
 buttons[15].addEventListener("click", function(e) {
     // Check if currentString isn't empty - if so, characterInput = 0 %
     // Subtract function
+    if (currentString) {
+        checkForSpace(" - ")
+    } else {
+        checkForSpace("0 %")
+    }
 })
 
 buttons[16].addEventListener("click", function(e) {
     // 0
+
+    if (currentString === "0") {
+        currentString = "0"
+    } else {
+        currentString += "0"
+    }
+
+    numberDisplay.textContent = currentString;
 })
 
 buttons[17].addEventListener("click", function(e) {
     // .
+
+    if (currentString === "0") {
+        currentString = "."
+    // Only adds "." to currentString if there isn't already a decimal
+    } else if (currentString.includes(".") === false) {
+        currentString += "."
+    }
+
+    numberDisplay.textContent = currentString;
 })
 
 buttons[18].addEventListener("click", function(e) {
