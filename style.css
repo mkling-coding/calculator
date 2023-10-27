@@ -66,3 +66,36 @@ body {
 #equals {
     grid-area: 5 / 3 / 6 / 5;
 }
+
+#footer {
+    position: absolute;
+    left: 0;
+	right: 0;
+    bottom: 0;
+	margin: auto;
+	width: 100%;
+	z-index: 99%;
+	text-align: center;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    padding: 20px 0px;
+}
+
+#footer a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+#footer p {
+    margin: 0px 10px;
+}
+
+#footer a:hover {
+    text-decoration: underline;
+}
+
+i {
+    margin-right: 5px
+}
