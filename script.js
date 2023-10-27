@@ -23,8 +23,6 @@ const remainder = (num1, num2) => {
     return num1 % num2;
 }
 
-console.log(remainder(1000, 15))
-
 // Variables for each part of a calculator operation
 let firstNumber;
 let secondNumber;
@@ -63,23 +61,26 @@ buttons[1].addEventListener("click", function(e) {
 })
 
 buttons[2].addEventListener("click", function(e) {
-    // Check if currentString isn't empty - if so, characterInput = 0 %
     // Remainder function
     let lastCharacter = currentString.charAt(currentString.length - 2);
 
     if (currentString.includes("+")) {
         // +
         if (lastCharacter === "+") {
-            currentString = currentString.slice(0, -3) + " % "
+            currentString = currentString.slice(0, -3) + " % ";
+            numberDisplay.textContent = currentString;
         } else {
             // First number equals number before operator
             firstNumber = currentString.substring(0, currentString.indexOf(" "));
             // Second number equals number after operator
             secondNumber = currentString.substring((currentString.indexOf("+") + 1), currentString.length);
             // Current string = remainder of two numbers
-            currentString = remainder(parseFloat(firstNumber), parseFloat(secondNumber));
+            currentString = add(parseFloat(firstNumber), parseFloat(secondNumber));
             // firstNumber is now remainder of last two numbers
             firstNumber = currentString;
+            // Add remainder to currentString
+            currentString += " % ";
+            // Set display to remainder
             numberDisplay.textContent = currentString;
         }
     } else if (currentString.includes("-")) {
@@ -87,21 +88,54 @@ buttons[2].addEventListener("click", function(e) {
         if (lastCharacter === "-") {
             currentString = currentString.slice(0, -3) + " % "
         } else {
+            // First number equals number before operator
             firstNumber = currentString.substring(0, currentString.indexOf(" "));
+            // Second number equals number after operator
+            secondNumber = currentString.substring((currentString.indexOf("-") + 1), currentString.length);
+            // Current string = remainder of two numbers
+            currentString = subtract(parseFloat(firstNumber), parseFloat(secondNumber));
+            // firstNumber is now remainder of last two numbers
+            firstNumber = currentString;
+            // Add remainder to currentString
+            currentString += " % ";
+            // Set display to remainder
+            numberDisplay.textContent = currentString;
         }
     } else if (currentString.includes("*")) {
         // *
         if (lastCharacter === "*") {
             currentString = currentString.slice(0, -3) + " % "
         } else {
+            // First number equals number before operator
             firstNumber = currentString.substring(0, currentString.indexOf(" "));
+            // Second number equals number after operator
+            secondNumber = currentString.substring((currentString.indexOf("*") + 1), currentString.length);
+            // Current string = remainder of two numbers
+            currentString = multiply(parseFloat(firstNumber), parseFloat(secondNumber));
+            // firstNumber is now remainder of last two numbers
+            firstNumber = currentString;
+            // Add remainder to currentString
+            currentString += " % ";
+            // Set display to remainder
+            numberDisplay.textContent = currentString;
         }
     } else if (currentString.includes("/")) {
         // /
         if (lastCharacter === "/") {
             currentString = currentString.slice(0, -3) + " % "
         } else {
+            // First number equals number before operator
             firstNumber = currentString.substring(0, currentString.indexOf(" "));
+            // Second number equals number after operator
+            secondNumber = currentString.substring((currentString.indexOf("/") + 1), currentString.length);
+            // Current string = remainder of two numbers
+            currentString = divide(parseFloat(firstNumber), parseFloat(secondNumber));
+            // firstNumber is now remainder of last two numbers
+            firstNumber = currentString;
+            // Add remainder to currentString
+            currentString += " % ";
+            // Set display to remainder
+            numberDisplay.textContent = currentString;
         }
     } else if (currentString.includes("%")) {
         // %
@@ -130,10 +164,102 @@ buttons[2].addEventListener("click", function(e) {
 buttons[3].addEventListener("click", function(e) {
     // Check if currentString isn't empty - if so, characterInput = 0 %
     // Add function
-    if (currentString) {
-        checkForSpace(" + ")
-    } else {
-        checkForSpace("0 + ")
+    let lastCharacter = currentString.charAt(currentString.length - 2);
+
+    if (currentString.includes("+")) {
+        // +
+        if (lastCharacter === "+") {
+            currentString = currentString.slice(0, -3) + " + ";
+            numberDisplay.textContent = currentString;
+        } else {
+            // First number equals number before operator
+            firstNumber = currentString.substring(0, currentString.indexOf(" "));
+            // Second number equals number after operator
+            secondNumber = currentString.substring((currentString.indexOf("+") + 1), currentString.length);
+            // Current string = remainder of two numbers
+            currentString = add(parseFloat(firstNumber), parseFloat(secondNumber));
+            // firstNumber is now remainder of last two numbers
+            firstNumber = currentString;
+            // Add remainder to currentString
+            currentString += " + ";
+            // Set display to remainder
+            numberDisplay.textContent = currentString;
+        }
+    } else if (currentString.includes("-")) {
+        // -
+        if (lastCharacter === "-") {
+            currentString = currentString.slice(0, -3) + " + "
+        } else {
+            // First number equals number before operator
+            firstNumber = currentString.substring(0, currentString.indexOf(" "));
+            // Second number equals number after operator
+            secondNumber = currentString.substring((currentString.indexOf("-") + 1), currentString.length);
+            // Current string = remainder of two numbers
+            currentString = subtract(parseFloat(firstNumber), parseFloat(secondNumber));
+            // firstNumber is now remainder of last two numbers
+            firstNumber = currentString;
+            // Add remainder to currentString
+            currentString += " + ";
+            // Set display to remainder
+            numberDisplay.textContent = currentString;
+        }
+    } else if (currentString.includes("*")) {
+        // *
+        if (lastCharacter === "*") {
+            currentString = currentString.slice(0, -3) + " + "
+        } else {
+            // First number equals number before operator
+            firstNumber = currentString.substring(0, currentString.indexOf(" "));
+            // Second number equals number after operator
+            secondNumber = currentString.substring((currentString.indexOf("*") + 1), currentString.length);
+            // Current string = remainder of two numbers
+            currentString = multiply(parseFloat(firstNumber), parseFloat(secondNumber));
+            // firstNumber is now remainder of last two numbers
+            firstNumber = currentString;
+            // Add remainder to currentString
+            currentString += " + ";
+            // Set display to remainder
+            numberDisplay.textContent = currentString;
+        }
+    } else if (currentString.includes("/")) {
+        // /
+        if (lastCharacter === "/") {
+            currentString = currentString.slice(0, -3) + " + "
+        } else {
+            // First number equals number before operator
+            firstNumber = currentString.substring(0, currentString.indexOf(" "));
+            // Second number equals number after operator
+            secondNumber = currentString.substring((currentString.indexOf("/") + 1), currentString.length);
+            // Current string = remainder of two numbers
+            currentString = divide(parseFloat(firstNumber), parseFloat(secondNumber));
+            // firstNumber is now remainder of last two numbers
+            firstNumber = currentString;
+            // Add remainder to currentString
+            currentString += " + ";
+            // Set display to remainder
+            numberDisplay.textContent = currentString;
+        }
+    } else if (currentString.includes("%")) {
+        // %
+        if (lastCharacter === "%") {
+            currentString = currentString.slice(0, -3) + " + "
+        } else {
+            // First number equals number before operator
+            firstNumber = currentString.substring(0, currentString.indexOf(" "));
+            // Second number equals number after operator
+            secondNumber = currentString.substring((currentString.indexOf("%") + 1), currentString.length);
+            // Current string = remainder of two numbers
+            currentString = remainder(parseFloat(firstNumber), parseFloat(secondNumber));
+            // firstNumber is now remainder of last two numbers
+            firstNumber = currentString;
+            // Add remainder to currentString
+            currentString += " + ";
+            // Set display to remainder
+            numberDisplay.textContent = currentString;
+        }
+    } else if (currentString) {
+        currentString += " + ";
+        numberDisplay.textContent = currentString;
     }
 })
 
@@ -176,10 +302,102 @@ buttons[6].addEventListener("click", function(e) {
 buttons[7].addEventListener("click", function(e) {
     // Check if currentString isn't empty - if so, characterInput = 0 %
     // Multiply function
-    if (currentString) {
-        checkForSpace(" * ")
-    } else {
-        checkForSpace("0 * ")
+    let lastCharacter = currentString.charAt(currentString.length - 2);
+
+    if (currentString.includes("+")) {
+        // +
+        if (lastCharacter === "+") {
+            currentString = currentString.slice(0, -3) + " * ";
+            numberDisplay.textContent = currentString;
+        } else {
+            // First number equals number before operator
+            firstNumber = currentString.substring(0, currentString.indexOf(" "));
+            // Second number equals number after operator
+            secondNumber = currentString.substring((currentString.indexOf("+") + 1), currentString.length);
+            // Current string = remainder of two numbers
+            currentString = add(parseFloat(firstNumber), parseFloat(secondNumber));
+            // firstNumber is now remainder of last two numbers
+            firstNumber = currentString;
+            // Add remainder to currentString
+            currentString += " * ";
+            // Set display to remainder
+            numberDisplay.textContent = currentString;
+        }
+    } else if (currentString.includes("-")) {
+        // -
+        if (lastCharacter === "-") {
+            currentString = currentString.slice(0, -3) + " * "
+        } else {
+            // First number equals number before operator
+            firstNumber = currentString.substring(0, currentString.indexOf(" "));
+            // Second number equals number after operator
+            secondNumber = currentString.substring((currentString.indexOf("-") + 1), currentString.length);
+            // Current string = remainder of two numbers
+            currentString = subtract(parseFloat(firstNumber), parseFloat(secondNumber));
+            // firstNumber is now remainder of last two numbers
+            firstNumber = currentString;
+            // Add remainder to currentString
+            currentString += " * ";
+            // Set display to remainder
+            numberDisplay.textContent = currentString;
+        }
+    } else if (currentString.includes("*")) {
+        // *
+        if (lastCharacter === "*") {
+            currentString = currentString.slice(0, -3) + " * "
+        } else {
+            // First number equals number before operator
+            firstNumber = currentString.substring(0, currentString.indexOf(" "));
+            // Second number equals number after operator
+            secondNumber = currentString.substring((currentString.indexOf("*") + 1), currentString.length);
+            // Current string = remainder of two numbers
+            currentString = multiply(parseFloat(firstNumber), parseFloat(secondNumber));
+            // firstNumber is now remainder of last two numbers
+            firstNumber = currentString;
+            // Add remainder to currentString
+            currentString += " * ";
+            // Set display to remainder
+            numberDisplay.textContent = currentString;
+        }
+    } else if (currentString.includes("/")) {
+        // /
+        if (lastCharacter === "/") {
+            currentString = currentString.slice(0, -3) + " * "
+        } else {
+            // First number equals number before operator
+            firstNumber = currentString.substring(0, currentString.indexOf(" "));
+            // Second number equals number after operator
+            secondNumber = currentString.substring((currentString.indexOf("/") + 1), currentString.length);
+            // Current string = remainder of two numbers
+            currentString = divide(parseFloat(firstNumber), parseFloat(secondNumber));
+            // firstNumber is now remainder of last two numbers
+            firstNumber = currentString;
+            // Add remainder to currentString
+            currentString += " * ";
+            // Set display to remainder
+            numberDisplay.textContent = currentString;
+        }
+    } else if (currentString.includes("%")) {
+        // %
+        if (lastCharacter === "%") {
+            currentString = currentString.slice(0, -3) + " * "
+        } else {
+            // First number equals number before operator
+            firstNumber = currentString.substring(0, currentString.indexOf(" "));
+            // Second number equals number after operator
+            secondNumber = currentString.substring((currentString.indexOf("%") + 1), currentString.length);
+            // Current string = remainder of two numbers
+            currentString = remainder(parseFloat(firstNumber), parseFloat(secondNumber));
+            // firstNumber is now remainder of last two numbers
+            firstNumber = currentString;
+            // Add remainder to currentString
+            currentString += " * ";
+            // Set display to remainder
+            numberDisplay.textContent = currentString;
+        }
+    } else if (currentString) {
+        currentString += " * ";
+        numberDisplay.textContent = currentString;
     }
 })
 
@@ -222,10 +440,102 @@ buttons[10].addEventListener("click", function(e) {
 buttons[11].addEventListener("click", function(e) {
     // Check if currentString isn't empty - if so, characterInput = 0 %
     // Divide function
-    if (currentString) {
-        checkForSpace(" / ")
-    } else {
-        checkForSpace("0 / ")
+    let lastCharacter = currentString.charAt(currentString.length - 2);
+
+    if (currentString.includes("+")) {
+        // +
+        if (lastCharacter === "+") {
+            currentString = currentString.slice(0, -3) + " / ";
+            numberDisplay.textContent = currentString;
+        } else {
+            // First number equals number before operator
+            firstNumber = currentString.substring(0, currentString.indexOf(" "));
+            // Second number equals number after operator
+            secondNumber = currentString.substring((currentString.indexOf("+") + 1), currentString.length);
+            // Current string = remainder of two numbers
+            currentString = add(parseFloat(firstNumber), parseFloat(secondNumber));
+            // firstNumber is now remainder of last two numbers
+            firstNumber = currentString;
+            // Add remainder to currentString
+            currentString += " / ";
+            // Set display to remainder
+            numberDisplay.textContent = currentString;
+        }
+    } else if (currentString.includes("-")) {
+        // -
+        if (lastCharacter === "-") {
+            currentString = currentString.slice(0, -3) + " / "
+        } else {
+            // First number equals number before operator
+            firstNumber = currentString.substring(0, currentString.indexOf(" "));
+            // Second number equals number after operator
+            secondNumber = currentString.substring((currentString.indexOf("-") + 1), currentString.length);
+            // Current string = remainder of two numbers
+            currentString = subtract(parseFloat(firstNumber), parseFloat(secondNumber));
+            // firstNumber is now remainder of last two numbers
+            firstNumber = currentString;
+            // Add remainder to currentString
+            currentString += " / ";
+            // Set display to remainder
+            numberDisplay.textContent = currentString;
+        }
+    } else if (currentString.includes("*")) {
+        // *
+        if (lastCharacter === "*") {
+            currentString = currentString.slice(0, -3) + " / "
+        } else {
+            // First number equals number before operator
+            firstNumber = currentString.substring(0, currentString.indexOf(" "));
+            // Second number equals number after operator
+            secondNumber = currentString.substring((currentString.indexOf("*") + 1), currentString.length);
+            // Current string = remainder of two numbers
+            currentString = multiply(parseFloat(firstNumber), parseFloat(secondNumber));
+            // firstNumber is now remainder of last two numbers
+            firstNumber = currentString;
+            // Add remainder to currentString
+            currentString += " / ";
+            // Set display to remainder
+            numberDisplay.textContent = currentString;
+        }
+    } else if (currentString.includes("/")) {
+        // /
+        if (lastCharacter === "/") {
+            currentString = currentString.slice(0, -3) + " / "
+        } else {
+            // First number equals number before operator
+            firstNumber = currentString.substring(0, currentString.indexOf(" "));
+            // Second number equals number after operator
+            secondNumber = currentString.substring((currentString.indexOf("/") + 1), currentString.length);
+            // Current string = remainder of two numbers
+            currentString = divide(parseFloat(firstNumber), parseFloat(secondNumber));
+            // firstNumber is now remainder of last two numbers
+            firstNumber = currentString;
+            // Add remainder to currentString
+            currentString += " / ";
+            // Set display to remainder
+            numberDisplay.textContent = currentString;
+        }
+    } else if (currentString.includes("%")) {
+        // %
+        if (lastCharacter === "%") {
+            currentString = currentString.slice(0, -3) + " / "
+        } else {
+            // First number equals number before operator
+            firstNumber = currentString.substring(0, currentString.indexOf(" "));
+            // Second number equals number after operator
+            secondNumber = currentString.substring((currentString.indexOf("%") + 1), currentString.length);
+            // Current string = remainder of two numbers
+            currentString = remainder(parseFloat(firstNumber), parseFloat(secondNumber));
+            // firstNumber is now remainder of last two numbers
+            firstNumber = currentString;
+            // Add remainder to currentString
+            currentString += " / ";
+            // Set display to remainder
+            numberDisplay.textContent = currentString;
+        }
+    } else if (currentString) {
+        currentString += " / ";
+        numberDisplay.textContent = currentString;
     }
 })
 
@@ -268,10 +578,102 @@ buttons[14].addEventListener("click", function(e) {
 buttons[15].addEventListener("click", function(e) {
     // Check if currentString isn't empty - if so, characterInput = 0 %
     // Subtract function
-    if (currentString) {
-        checkForSpace(" - ")
-    } else {
-        checkForSpace("0 %")
+    let lastCharacter = currentString.charAt(currentString.length - 2);
+
+    if (currentString.includes("+")) {
+        // +
+        if (lastCharacter === "+") {
+            currentString = currentString.slice(0, -3) + " - ";
+            numberDisplay.textContent = currentString;
+        } else {
+            // First number equals number before operator
+            firstNumber = currentString.substring(0, currentString.indexOf(" "));
+            // Second number equals number after operator
+            secondNumber = currentString.substring((currentString.indexOf("+") + 1), currentString.length);
+            // Current string = remainder of two numbers
+            currentString = add(parseFloat(firstNumber), parseFloat(secondNumber));
+            // firstNumber is now remainder of last two numbers
+            firstNumber = currentString;
+            // Add remainder to currentString
+            currentString += " - ";
+            // Set display to remainder
+            numberDisplay.textContent = currentString;
+        }
+    } else if (currentString.includes("-")) {
+        // -
+        if (lastCharacter === "-") {
+            currentString = currentString.slice(0, -3) + " - "
+        } else {
+            // First number equals number before operator
+            firstNumber = currentString.substring(0, currentString.indexOf(" "));
+            // Second number equals number after operator
+            secondNumber = currentString.substring((currentString.indexOf("-") + 1), currentString.length);
+            // Current string = remainder of two numbers
+            currentString = subtract(parseFloat(firstNumber), parseFloat(secondNumber));
+            // firstNumber is now remainder of last two numbers
+            firstNumber = currentString;
+            // Add remainder to currentString
+            currentString += " - ";
+            // Set display to remainder
+            numberDisplay.textContent = currentString;
+        }
+    } else if (currentString.includes("*")) {
+        // *
+        if (lastCharacter === "*") {
+            currentString = currentString.slice(0, -3) + " - "
+        } else {
+            // First number equals number before operator
+            firstNumber = currentString.substring(0, currentString.indexOf(" "));
+            // Second number equals number after operator
+            secondNumber = currentString.substring((currentString.indexOf("*") + 1), currentString.length);
+            // Current string = remainder of two numbers
+            currentString = multiply(parseFloat(firstNumber), parseFloat(secondNumber));
+            // firstNumber is now remainder of last two numbers
+            firstNumber = currentString;
+            // Add remainder to currentString
+            currentString += " - ";
+            // Set display to remainder
+            numberDisplay.textContent = currentString;
+        }
+    } else if (currentString.includes("/")) {
+        // /
+        if (lastCharacter === "/") {
+            currentString = currentString.slice(0, -3) + " - "
+        } else {
+            // First number equals number before operator
+            firstNumber = currentString.substring(0, currentString.indexOf(" "));
+            // Second number equals number after operator
+            secondNumber = currentString.substring((currentString.indexOf("/") + 1), currentString.length);
+            // Current string = remainder of two numbers
+            currentString = divide(parseFloat(firstNumber), parseFloat(secondNumber));
+            // firstNumber is now remainder of last two numbers
+            firstNumber = currentString;
+            // Add remainder to currentString
+            currentString += " - ";
+            // Set display to remainder
+            numberDisplay.textContent = currentString;
+        }
+    } else if (currentString.includes("%")) {
+        // %
+        if (lastCharacter === "%") {
+            currentString = currentString.slice(0, -3) + " - "
+        } else {
+            // First number equals number before operator
+            firstNumber = currentString.substring(0, currentString.indexOf(" "));
+            // Second number equals number after operator
+            secondNumber = currentString.substring((currentString.indexOf("%") + 1), currentString.length);
+            // Current string = remainder of two numbers
+            currentString = remainder(parseFloat(firstNumber), parseFloat(secondNumber));
+            // firstNumber is now remainder of last two numbers
+            firstNumber = currentString;
+            // Add remainder to currentString
+            currentString += " - ";
+            // Set display to remainder
+            numberDisplay.textContent = currentString;
+        }
+    } else if (currentString) {
+        currentString += " - ";
+        numberDisplay.textContent = currentString;
     }
 })
 
