@@ -58,6 +58,18 @@ buttons[0].addEventListener("click", function(e) {
 
 buttons[1].addEventListener("click", function(e) {
     // Delete function
+    let lastCharacter = currentString.charAt(currentString.length - 2);
+
+    if (currentString.includes("+") && lastCharacter === "+" || currentString.includes("-") && lastCharacter === "-" || currentString.includes("*") && lastCharacter === "*" || currentString.includes("/") && lastCharacter === "/" || currentString.includes("%") && lastCharacter === "%") {
+        currentString = currentString.slice(0, -2);
+        numberDisplay.textContent = currentString;
+    } else if (currentString.length > 1) {
+        currentString = currentString.slice(0, -1);
+        numberDisplay.textContent = currentString;
+    } else {
+        currentString = "0";
+        numberDisplay.textContent = currentString;
+    }
 })
 
 buttons[2].addEventListener("click", function(e) {
