@@ -44,6 +44,93 @@ const operate = (num1, num2, operator) => {
     }
 };
 
+// Function for all number event listeners - checks if currentString is 0 and if so make currentString the number. Else, add number to currentString
+const addNumberToDisplay = num => {
+    if (currentString === "0") {
+        currentString = num;
+    } else {
+        currentString += num;
+    }
+
+    numberDisplay.textContent = currentString;
+}
+
+// Decimal clicked
+const whenDecimalClicked = () => {
+    if (currentString === "0") {
+        currentString = "."
+    // Only adds "." to currentString if there isn't already a decimal in first or second part of equation
+    } else if (currentString.includes("+") && (currentString.substring((currentString.indexOf("+") + 1), currentString.length)).includes(".") === false || currentString.includes("-") && (currentString.substring((currentString.indexOf("-") + 1), currentString.length)).includes(".") === false || currentString.includes("*") && (currentString.substring((currentString.indexOf("*") + 1), currentString.length)).includes(".") === false || currentString.includes("/") && (currentString.substring((currentString.indexOf("/") + 1), currentString.length)).includes(".") === false || currentString.includes("%") && (currentString.substring((currentString.indexOf("%") + 1), currentString.length)).includes(".") === false) {
+        currentString += ".";
+    } else if (currentString.includes(".") === false) {
+        currentString += "."
+    }
+
+    numberDisplay.textContent = currentString;
+}
+
+// Function runs when = is tapped or clicked, checks if operator is last character or not and runs different code for exceptions
+const calculateAnswer = () => {
+    let lastCharacter = currentString.charAt(currentString.length - 2);
+
+    if (currentString.includes("+") && lastCharacter != "+") {
+        // firstNumber equals number before operator
+        firstNumber = currentString.substring(0, currentString.indexOf(" "));
+        // secondNumber equals number after operator
+        secondNumber = currentString.substring((currentString.indexOf("+") + 1), currentString.length);
+        // currentString = sum of two numbers
+        currentString = (add(parseFloat(firstNumber), parseFloat(secondNumber))).toString();
+        // firstNumber is now sum of last two numbers
+        firstNumber = currentString;
+        // Set display to currentString
+        numberDisplay.textContent = currentString;
+    } else if (currentString.includes("-") && lastCharacter != "-") {
+        // firstNumber equals number before operator
+        firstNumber = currentString.substring(0, currentString.indexOf(" "));
+        // secondNumber equals number after operator
+        secondNumber = currentString.substring((currentString.indexOf("-") + 1), currentString.length);
+        // currentString = difference of two numbers
+        currentString = (subtract(parseFloat(firstNumber), parseFloat(secondNumber))).toString();
+        // firstNumber is now difference of last two numbers
+        firstNumber = currentString;
+        // Set display to currentString
+        numberDisplay.textContent = currentString;
+    } else if (currentString.includes("*") && lastCharacter != "*") {
+        // firstNumber equals number before operator
+        firstNumber = currentString.substring(0, currentString.indexOf(" "));
+        // secondNumber equals number after operator
+        secondNumber = currentString.substring((currentString.indexOf("*") + 1), currentString.length);
+        // currentString = product of two numbers
+        currentString = (multiply(parseFloat(firstNumber), parseFloat(secondNumber))).toString();
+        // firstNumber is now product of last two numbers
+        firstNumber = currentString;
+        // Set display to currentString
+        numberDisplay.textContent = currentString;
+    } else if (currentString.includes("/") && lastCharacter != "/") {
+        // firstNumber equals number before operator
+        firstNumber = currentString.substring(0, currentString.indexOf(" "));
+        // secondNumber equals number after operator
+        secondNumber = currentString.substring((currentString.indexOf("/") + 1), currentString.length);
+        // currentString = quotient of two numbers
+        currentString = (divide(parseFloat(firstNumber), parseFloat(secondNumber))).toString();
+        // firstNumber is now quotient of last two numbers
+        firstNumber = currentString;
+        // Set display to currentString
+        numberDisplay.textContent = currentString;
+    } else if (currentString.includes("%") && lastCharacter != "%") {
+        // firstNumber equals number before operator
+        firstNumber = currentString.substring(0, currentString.indexOf(" "));
+        // secondNumber equals number after operator
+        secondNumber = currentString.substring((currentString.indexOf("%") + 1), currentString.length);
+        // currentString = remainder of two numbers
+        currentString = (remainder(parseFloat(firstNumber), parseFloat(secondNumber))).toString();
+        // firstNumber is now remainder of last two numbers
+        firstNumber = currentString;
+        // Set display to currentString
+        numberDisplay.textContent = currentString;
+    }
+}
+
 // Function for all operator event listeners - outputs answer if another operator is clicked when an operator is already present in the equation. Makes the calculator cleaner
 const findAnswer = operator => {
     let lastCharacter = "";
@@ -150,6 +237,23 @@ const findAnswer = operator => {
     }
 }
 
+// Event listeners for buttons on keyboard
+document.addEventListener("keyup", function(e) {
+    // Numbers
+    if (e.key === "1" || e.key === "2" || e.key === "3" || e.key === "4" || e.key === "5" || e.key === "6" || e.key === "7" || e.key === "8" || e.key === "9" || e.key === "0") {
+        addNumberToDisplay(e.key)
+    // Operators
+    } else if (e.key === "+" || e.key === "-" || e.key === "*" || e.key === "/" || e.key === "%") {
+        findAnswer(e.key)
+    // =
+    } else if (e.key === "=" || e.key === "Enter") {
+        calculateAnswer();
+    // .
+    } else if (e.key === ".") {
+        whenDecimalClicked();
+    }
+})
+
 buttons[0].addEventListener("click", function(e) {
     // Clear all function
     currentString = "0";
@@ -184,38 +288,17 @@ buttons[3].addEventListener("click", function(e) {
 
 buttons[4].addEventListener("click", function(e) {
     // 1
-
-    if (currentString === "0") {
-        currentString = "1"
-    } else {
-        currentString += "1"
-    }
-
-    numberDisplay.textContent = currentString;
+    addNumberToDisplay("1");
 })
 
 buttons[5].addEventListener("click", function(e) {
     // 2
-
-    if (currentString === "0") {
-        currentString = "2"
-    } else {
-        currentString += "2"
-    }
-
-    numberDisplay.textContent = currentString;
+    addNumberToDisplay("2")
 })
 
 buttons[6].addEventListener("click", function(e) {
     // 3
-
-    if (currentString === "0") {
-        currentString = "3"
-    } else {
-        currentString += "3"
-    }
-
-    numberDisplay.textContent = currentString;
+    addNumberToDisplay("3")
 })
 
 buttons[7].addEventListener("click", function(e) {
@@ -225,38 +308,17 @@ buttons[7].addEventListener("click", function(e) {
 
 buttons[8].addEventListener("click", function(e) {
     // 4
-
-    if (currentString === "0") {
-        currentString = "4"
-    } else {
-        currentString += "4"
-    }
-
-    numberDisplay.textContent = currentString;
+    addNumberToDisplay("4")
 })
 
 buttons[9].addEventListener("click", function(e) {
     // 5
-
-    if (currentString === "0") {
-        currentString = "5"
-    } else {
-        currentString += "5"
-    }
-
-    numberDisplay.textContent = currentString;
+    addNumberToDisplay("5")
 })
 
 buttons[10].addEventListener("click", function(e) {
     // 6
-
-    if (currentString === "0") {
-        currentString = "6"
-    } else {
-        currentString += "6"
-    }
-
-    numberDisplay.textContent = currentString;
+    addNumberToDisplay("6")
 })
 
 buttons[11].addEventListener("click", function(e) {
@@ -266,38 +328,17 @@ buttons[11].addEventListener("click", function(e) {
 
 buttons[12].addEventListener("click", function(e) {
     // 7
-
-    if (currentString === "0") {
-        currentString = "7"
-    } else {
-        currentString += "7"
-    }
-
-    numberDisplay.textContent = currentString;
+    addNumberToDisplay("7")
 })
 
 buttons[13].addEventListener("click", function(e) {
     // 8
-
-    if (currentString === "0") {
-        currentString = "8"
-    } else {
-        currentString += "8"
-    }
-
-    numberDisplay.textContent = currentString;
+    addNumberToDisplay("8")
 })
 
 buttons[14].addEventListener("click", function(e) {
     // 9
-
-    if (currentString === "0") {
-        currentString = "9"
-    } else {
-        currentString += "9"
-    }
-
-    numberDisplay.textContent = currentString;
+    addNumberToDisplay("9")
 })
 
 buttons[15].addEventListener("click", function(e) {
@@ -307,91 +348,15 @@ buttons[15].addEventListener("click", function(e) {
 
 buttons[16].addEventListener("click", function(e) {
     // 0
-
-    if (currentString === "0") {
-        currentString = "0"
-    } else {
-        currentString += "0"
-    }
-
-    numberDisplay.textContent = currentString;
+    addNumberToDisplay("0")
 })
 
 buttons[17].addEventListener("click", function(e) {
     // .
-
-    if (currentString === "0") {
-        currentString = "."
-    // Only adds "." to currentString if there isn't already a decimal in first or second part of equation
-    } else if (currentString.includes("+") && (currentString.substring((currentString.indexOf("+") + 1), currentString.length)).includes(".") === false || currentString.includes("-") && (currentString.substring((currentString.indexOf("-") + 1), currentString.length)).includes(".") === false || currentString.includes("*") && (currentString.substring((currentString.indexOf("*") + 1), currentString.length)).includes(".") === false || currentString.includes("/") && (currentString.substring((currentString.indexOf("/") + 1), currentString.length)).includes(".") === false || currentString.includes("%") && (currentString.substring((currentString.indexOf("%") + 1), currentString.length)).includes(".") === false) {
-        currentString += ".";
-    } else if (currentString.includes(".") === false) {
-        currentString += "."
-    }
-
-    numberDisplay.textContent = currentString;
+    whenDecimalClicked();
 })
 
 buttons[18].addEventListener("click", function(e) {
     // Operate function
-    let lastCharacter = currentString.charAt(currentString.length - 2);
-
-    if (currentString.includes("+") && lastCharacter != "+") {
-        // firstNumber equals number before operator
-        firstNumber = currentString.substring(0, currentString.indexOf(" "));
-        // secondNumber equals number after operator
-        secondNumber = currentString.substring((currentString.indexOf("+") + 1), currentString.length);
-        // currentString = sum of two numbers
-        currentString = (add(parseFloat(firstNumber), parseFloat(secondNumber))).toString();
-        // firstNumber is now sum of last two numbers
-        firstNumber = currentString;
-        // Set display to currentString
-        numberDisplay.textContent = currentString;
-    } else if (currentString.includes("-") && lastCharacter != "-") {
-        // firstNumber equals number before operator
-        firstNumber = currentString.substring(0, currentString.indexOf(" "));
-        // secondNumber equals number after operator
-        secondNumber = currentString.substring((currentString.indexOf("-") + 1), currentString.length);
-        // currentString = difference of two numbers
-        currentString = (subtract(parseFloat(firstNumber), parseFloat(secondNumber))).toString();
-        // firstNumber is now difference of last two numbers
-        firstNumber = currentString;
-        // Set display to currentString
-        numberDisplay.textContent = currentString;
-    } else if (currentString.includes("*") && lastCharacter != "*") {
-        // firstNumber equals number before operator
-        firstNumber = currentString.substring(0, currentString.indexOf(" "));
-        // secondNumber equals number after operator
-        secondNumber = currentString.substring((currentString.indexOf("*") + 1), currentString.length);
-        // currentString = product of two numbers
-        currentString = (multiply(parseFloat(firstNumber), parseFloat(secondNumber))).toString();
-        // firstNumber is now product of last two numbers
-        firstNumber = currentString;
-        // Set display to currentString
-        numberDisplay.textContent = currentString;
-    } else if (currentString.includes("/") && lastCharacter != "/") {
-        // firstNumber equals number before operator
-        firstNumber = currentString.substring(0, currentString.indexOf(" "));
-        // secondNumber equals number after operator
-        secondNumber = currentString.substring((currentString.indexOf("/") + 1), currentString.length);
-        // currentString = quotient of two numbers
-        currentString = (divide(parseFloat(firstNumber), parseFloat(secondNumber))).toString();
-        // firstNumber is now quotient of last two numbers
-        firstNumber = currentString;
-        // Set display to currentString
-        numberDisplay.textContent = currentString;
-    } else if (currentString.includes("%") && lastCharacter != "%") {
-        // firstNumber equals number before operator
-        firstNumber = currentString.substring(0, currentString.indexOf(" "));
-        // secondNumber equals number after operator
-        secondNumber = currentString.substring((currentString.indexOf("%") + 1), currentString.length);
-        // currentString = remainder of two numbers
-        currentString = (remainder(parseFloat(firstNumber), parseFloat(secondNumber))).toString();
-        // firstNumber is now remainder of last two numbers
-        firstNumber = currentString;
-        // Set display to currentString
-        numberDisplay.textContent = currentString;
-    }
+    calculateAnswer();
 })
-
-
